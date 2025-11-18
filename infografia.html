@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infografía: Rediseño Portal SII</title>
+    <!-- Carga de Fuentes e Iconos -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;800&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        /* --- Configuración General --- */
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: #f3f4f6; /* Gris claro de fondo */
+            margin: 0;
+            padding: 40px;
+            display: grid;
+            place-items: center;
+        }
+
+        .infographic-container {
+            width: 800px;
+            max-width: 100%;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            border: 1px solid #e5e7eb;
+        }
+
+        section {
+            padding: 40px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        section:last-child {
+            border-bottom: none;
+        }
+
+        /* --- Tipografía --- */
+        h1, h2, h3, h4 {
+            font-family: 'Poppins', sans-serif;
+            margin-top: 0;
+        }
+
+        h1 {
+            font-size: 44px;
+            font-weight: 800;
+            color: #1d4ed8; /* siiBlue */
+            margin-bottom: 0;
+            line-height: 1.2;
+        }
+
+        h2 {
+            font-size: 22px;
+            color: #4b5563;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        h3 { /* Títulos de Sección */
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        h4 { /* Títulos de Items */
+            font-size: 18px;
+            color: #1f2937;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #374151;
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+
+        /* --- Estilos de Grilla y Columnas --- */
+        .grid-3-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 25px;
+        }
+
+        .grid-item {
+            background-color: #f9fafb; /* Gris muy claro */
+            border-radius: 8px;
+            padding: 25px;
+            text-align: center;
+            border: 1px solid #e5e7eb;
+        }
+
+        .grid-item i {
+            font-size: 40px;
+            margin-bottom: 20px;
+        }
+
+        /* --- 1. Encabezado --- */
+        .header {
+            text-align: center;
+            background-color: #f8fafc;
+        }
+        .header p {
+            font-size: 14px;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* --- 2. Problema (Rojo/Naranja) --- */
+        .problem-section h3 {
+            color: #dc2626; /* red-600 */
+        }
+        .problem-section i {
+            color: #dc2626;
+        }
+
+        /* --- 3. Solución (Azul SII) --- */
+        .solution-section h3 {
+            color: #1d4ed8; /* siiBlue */
+        }
+        .solution-section i {
+            color: #1d4ed8;
+        }
+
+        /* --- Mockup del Prototipo --- */
+        .prototype-mockup {
+            background: #ffffff;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 30px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            position: relative;
+        }
+        .prototype-mockup h4 {
+            font-size: 14px;
+            color: #1d4ed8;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        .mockup-button {
+            background-color: #1d4ed8;
+            color: #ffffff;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 700;
+            font-family: 'Lato', sans-serif;
+            display: inline-block;
+            box-shadow: 0 4px 10px rgba(29, 78, 216, 0.3);
+        }
+        .mockup-chatbot {
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            background-color: #1d4ed8;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            font-size: 24px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+         .mockup-chatbot i {
+            font-size: 24px;
+            color: white;
+            margin: 0;
+         }
+
+        /* --- 4. Impacto (Verde) --- */
+        .impact-section h3 {
+            color: #16a34a; /* green-600 */
+        }
+        .impact-section i {
+            color: #16a34a;
+        }
+        .stat-number {
+            font-family: 'Poppins', sans-serif;
+            font-size: 40px;
+            font-weight: 800;
+            color: #16a34a;
+            line-height: 1;
+            margin-bottom: 10px;
+        }
+        .stat-label {
+            font-size: 14px;
+            color: #374151;
+            font-weight: 700;
+        }
+
+        /* --- 5. Beneficios (Gris Oscuro) --- */
+        .benefit-section {
+            background-color: #374151; /* gray-700 */
+        }
+        .benefit-section h3 {
+            color: #ffffff;
+        }
+        .benefit-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: left;
+            gap: 15px;
+        }
+        .benefit-item i {
+            font-size: 24px;
+            color: #1d4ed8; /* siiBlue */
+            background: #ffffff;
+            padding: 10px;
+            border-radius: 50%;
+            width: 28px; /* Forzado */
+            height: 28px; /* Forzado */
+            text-align: center;
+            line-height: 28px; /* Forzado */
+        }
+        .benefit-item p {
+            font-size: 18px;
+            color: #ffffff;
+            font-weight: 700;
+            flex: 1;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="infographic-container">
+        
+        <!-- === 1. ENCABEZADO === -->
+        <section class="header">
+            <p>Diplomado Innovación y Transformación Digital (UCT)</p>
+            <h1>De la Confusión a la Claridad</h1>
+            <h2>Rediseño del Portal SII Centrado en el Ciudadano</h2>
+        </section>
+
+        <!-- === 2. EL PROBLEMA === -->
+        <section class="problem-section">
+            <h3>EL PROBLEMA: Un Portal Inaccesible y Complejo</h3>
+            <div class="grid-3-col">
+                <div class="grid-item">
+                    <i class="fa-solid fa-magnifying-glass-minus"></i>
+                    <h4>Buscador "Implacable"</h4>
+                    <p>No entiende lenguaje ciudadano. "Crear empresa" = 0 resultados. Genera alta frustración.</p>
+                </div>
+                <div class="grid-item">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    <h4>Navegación Confusa</h4>
+                    <p>Procesos largos, lenguaje técnico y formularios complejos sin guía paso a paso.</p>
+                </div>
+                <div class="grid-item">
+                    <i class="fa-solid fa-universal-access"></i>
+                    <h4>Brecha de Accesibilidad</h4>
+                    <p>Bajo contraste, no apto para lectores de pantalla y difícil de navegar con teclado.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- === 3. LA SOLUCIÓN === -->
+        <section class="solution-section">
+            <h3>LA SOLUCIÓN: Un Servicio Asistencial e Inteligente</h3>
+            <div class="grid-3-col">
+                <div class="grid-item">
+                    <i class="fa-solid fa-robot"></i>
+                    <h4>Asistente Virtual (IA)</h4>
+                    <p>Chatbot 24/7 que guía al usuario y resuelve dudas con lenguaje simple y directo.</p>
+                </div>
+                <div class="grid-item">
+                    <i class="fa-solid fa-lightbulb"></i>
+                    <h4>Búsqueda Semántica (IA)</h4>
+                    <p>Motor de búsqueda que interpreta sinónimos ('formalizar' = 'Inicio de Actividades').</p>
+                </div>
+                <div class="grid-item">
+                    <i class="fa-solid fa-file-lines"></i>
+                    <h4>Diseño UX Simplificado</h4>
+                    <p>Flujos claros (Acordeones) y diseño accesible (WCAG) en un portal responsivo.</p>
+                </div>
+            </div>
+
+            <!-- Mockup del Prototipo -->
+            <div class="prototype-mockup">
+                <h4>DEMOSTRACIÓN DEL PROTOTIPO</h4>
+                <p style="margin-bottom: 2em;">Hemos creado un prototipo básico que busca probar los conceptos a aplicar en un rediseño centrado en el usuario.</p>
+                <div style="text-align: center;">
+                    <a href="sii.html" class="mockup-button" style="text-decoration: none;">Prototipo SII</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- === 4. INDICADORES DE IMPACTO === -->
+        <section class="impact-section">
+            <h3>INDICADORES DE ÉXITO: Midiendo el Valor Público</h3>
+            <div class="grid-3-col">
+                <div class="grid-item">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <div class="stat-number">+25%</div>
+                    <h4 class="stat-label">Tasa de Autoservicio (TAD)</h4>
+                    <p>Menos costos de Call Center.</p>
+                </div>
+                <div class="grid-item">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                    <div class="stat-number">-40%</div>
+                    <h4 class="stat-label">Tiempo de Trámite (TPT)</h4>
+                    <p>Formalización más rápida.</p>
+                </div>
+                <div class="grid-item">
+                    <i class="fa-solid fa-magnifying-glass-chart"></i>
+                    <div class="stat-number">90%</div>
+                    <h4 class="stat-label">Búsqueda Exitosa (TBE)</h4>
+                    <p>Menos frustración ciudadana.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- === 5. BENEFICIOS === -->
+        <section class="benefit-section">
+            <h3>BENEFICIOS: Un Estado Más Humano y Eficiente</h3>
+            <div class="grid-3-col" style="gap: 15px;">
+                <div class="benefit-item">
+                    <i class="fa-solid fa-users"></i>
+                    <p>Mayor Autonomía del Contribuyente</p>
+                </div>
+                <div class="benefit-item">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    <p>Reducción de la Ansiedad Fiscal</p>
+                </div>
+                <div class="benefit-item">
+                    <i class="fa-solid fa-handshake"></i>
+                    <p>Impulso a la Inclusión Digital y la Economía</p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+</body>
+</html>
