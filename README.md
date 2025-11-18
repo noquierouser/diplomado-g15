@@ -17,6 +17,7 @@ El rediseño propuesto busca transformar la percepción del Servicio de Impuesto
 
 ---
 
-Desarrollado por el Grupo 15 del Diplomado en Innovación y Transformación Digital – Innovación Tecnológica y Experiencia del Usuario
-Universidad Católica de Temuco
-2025
+<p style="text-align: center !important; font-size: 9pt;">Desarrollado por el Grupo 15 <br>
+Diplomado en Innovación y Transformación Digital – Innovación Tecnológica y Experiencia del Usuario <br>
+Universidad Católica de Temuco <br>
+2025</p>
