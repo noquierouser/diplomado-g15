@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SII Digital: Mejora de la Experiencia (Prototipo)</title>
+    <!-- Carga de Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Configuración de fuente Inter y estética general */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* light slate-50 */
+        }
+        /* Estilo para simular el logo del SII */
+        .sii-logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #1d4ed8; /* blue-700 */
+        }
+        /* Estilos personalizados para el chatbot flotante */
+        #chatbot-button {
+            transition: transform 0.3s ease;
+        }
+        #chatbot-button:hover {
+            transform: scale(1.05);
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        siiBlue: '#1d4ed8',
+                        siiLight: '#3b82f6',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <!-- CABECERA Y NAVEGACIÓN (SIMULADA) -->
+    <header class="bg-white shadow-md sticky top-0 z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <span class="sii-logo cursor-pointer" onclick="loadContent('home')">SII <span class="text-gray-500 font-light">Digital</span></span>
+            
+            <!-- MEJORA: Barra de Búsqueda Inteligente -->
+            <div class="relative w-full max-w-xl">
+                <input type="text" id="smartSearch" placeholder="Busca trámites... Ej: 'crear empresa', 'formalizar'"
+                       class="w-full p-3 pl-10 border border-gray-300 rounded-lg shadow-sm focus:ring-siiBlue focus:border-siiBlue transition duration-150"
+                       oninput="handleSearchInput()" onfocus="handleSearchInput()" onblur="setTimeout(() => document.getElementById('searchResults').classList.add('hidden'), 200)">
+                <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+                
+                <!-- Resultados de Búsqueda (Dropdown Inteligente) -->
+                <div id="searchResults" class="absolute w-full mt-2 bg-white border border-gray-200 rounded-lg shadow-xl z-20 hidden">
+                    <!-- Contenido inyectado por JS -->
+                </div>
+            </div>
+            
+            <!-- Menú de Usuario (Placeholder) -->
+            <div class="hidden sm:flex space-x-4 items-center">
+                <a href="#" class="text-gray-600 hover:text-siiBlue transition duration-150">Mi SII</a>
+                <a href="#" class="text-gray-600 hover:text-siiBlue transition duration-150">Ayuda</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- CONTENIDO PRINCIPAL DINÁMICO -->
+    <main id="mainContent" class="flex-grow max-w-7xl mx-auto p-4 sm:p-6 lg:p-8 w-full"></main>
+
+    <!-- MEJORA: Botón Flotante del Asistente Virtual (Chatbot) -->
+    <button id="chatbot-button" class="fixed bottom-6 right-6 bg-siiBlue text-white p-4 rounded-full shadow-2xl hover:bg-siiLight flex items-center justify-center transition duration-300 transform hover:scale-105" title="Asistente Virtual" onclick="document.getElementById('chatbotModal').classList.remove('hidden')">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16l3-3m0 0l3 3m-3-3v-4" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+    </button>
+    
+    <!-- Modal/Simulación de Chatbot -->
+    <div id="chatbotModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white p-6 rounded-xl shadow-2xl w-full max-w-md">
+            <div class="flex justify-between items-center border-b pb-2 mb-4">
+                <h3 class="text-xl font-bold text-siiBlue">🤖 Asistente Virtual SII</h3>
+                <button onclick="document.getElementById('chatbotModal').classList.add('hidden')" class="text-gray-500 hover:text-gray-700 font-bold">✕</button>
+            </div>
+            <p class="text-gray-700 mb-4">¡Hola! Soy tu guía de trámites. Puedo llevarte directo a lo que necesitas.</p>
+            <div class="space-y-3">
+                <button class="w-full text-left p-3 border border-siiLight text-siiBlue rounded-lg hover:bg-siiLight hover:text-white transition duration-150" onclick="alertUser('Te dirigiré al Inicio de Actividades.')">1. Quiero **iniciar un negocio** (Inicio de Actividades)</button>
+                <button class="w-full text-left p-3 border border-gray-300 rounded-lg hover:bg-gray-100 transition duration-150" onclick="alertUser('Te dirigiré a la sección de Boletas de Honorarios.')">2. Emitir o anular **Boletas de Honorarios**</button>
+                <button class="w-full text-left p-3 border border-gray-300 rounded-lg hover:bg-gray-100 transition duration-150" onclick="alertUser('Te dirigiré a la sección de Declaraciones Anuales.')">3. Realizar mi **Declaración de Renta**</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mensaje de Alerta Personalizado (Simulación) -->
+    <div id="customAlert" class="fixed top-0 left-0 w-full p-4 bg-siiBlue text-white text-center font-semibold shadow-lg z-50 hidden transition-all duration-300 -translate-y-full">
+        <span id="alertMessage"></span>
+    </div>
+
+    <script>
+        // Diccionario de sinónimos para la Búsqueda Inteligente (Tecnología Habilitadora: PLN)
+        const searchSynonyms = {
+            'crear empresa': 'Inicio de Actividades',
+            'iniciar negocio': 'Inicio de Actividades',
+            'formalizar': 'Inicio de Actividades',
+            'rut empresa': 'Inicio de Actividades',
+            'rut persona juridica': 'Obtención de RUT',
+            'boletas': 'Boletas de Honorarios Electrónicas',
+            'facturación': 'Sistema de Facturación Electrónica',
+            'renta': 'Declaración de Renta',
+        };
+
+        // Estructura de contenido del sitio
+        const siteContent = {
+            // Contenido inicial de la página (Home)
+            'home': `
+                <section class="text-center py-16 bg-white rounded-xl shadow-lg mb-8">
+                    <h1 class="text-4xl font-extrabold text-gray-800 mb-4">Bienvenido al nuevo portal SII</h1>
+                    <p class="text-xl text-gray-500 mb-8">Encuentra tus trámites de forma fácil y rápida con nuestra nueva experiencia.</p>
+                    
+                    <!-- MEJORA 1: ACCESO DIRECTO DESTACADO (El gran CTA) -->
+                    <div class="max-w-xl mx-auto p-6 bg-green-50 border-4 border-green-200 rounded-2xl shadow-xl">
+                        <h2 class="text-2xl font-bold text-green-700 mb-4">¿Estás iniciando un negocio o emprendimiento?</h2>
+                        <p class="text-gray-600 mb-6">Te ayudamos a formalizar tu actividad económica en un solo clic, sin perderte en el proceso.</p>
+                        <button onclick="loadContent('inicioActividades')" class="bg-siiBlue hover:bg-siiLight text-white font-bold py-3 px-8 rounded-xl shadow-lg transition duration-300 transform hover:-translate-y-0.5">
+                            Comienza tu Negocio Aquí →
+                        </button>
+                    </div>
+                </section>
+                
+                <section class="py-8">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-6 border-b pb-2">Nuestros Servicios más Solicitados</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <!-- Tarjeta de Ejemplo -->
+                        <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition duration-300 border border-gray-100">
+                            <h3 class="text-xl font-semibold text-gray-700 mb-3">Declaración de Renta</h3>
+                            <p class="text-gray-500 text-sm">Realiza tu declaración anual de impuestos de forma guiada.</p>
+                        </div>
+                        <!-- Tarjeta de Ejemplo -->
+                        <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition duration-300 border border-gray-100">
+                            <h3 class="text-xl font-semibold text-gray-700 mb-3">Boletas Electrónicas</h3>
+                            <p class="text-gray-500 text-sm">Emite, anula y consulta tus boletas de honorarios.</p>
+                        </div>
+                        <!-- Tarjeta de Ejemplo -->
+                        <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition duration-300 border border-gray-100">
+                            <h3 class="text-xl font-semibold text-gray-700 mb-3">Modificar Domicilio</h3>
+                            <p class="text-gray-500 text-sm">Actualiza tu domicilio tributario y sucursales.</p>
+                        </div>
+                    </div>
+                </section>
+            `,
+            // MEJORA 2: PÁGINA REDISEÑADA DEL TRÁMITE
+            'inicioActividades': `
+                <div class="bg-white p-8 rounded-2xl shadow-2xl">
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 border-b pb-4 gap-4">
+                        <h1 class="text-3xl font-extrabold text-siiBlue">Inicio de Actividades (Formaliza tu Negocio)</h1>
+                        <button onclick="alertUser('Simulación: Se abre el formulario en una nueva pestaña.')" class="w-full md:w-auto bg-siiBlue hover:bg-siiLight text-white font-bold py-3 px-8 rounded-xl shadow-md transition duration-300 transform hover:scale-105 min-w-[200px]">
+                            Iniciar Trámite Ahora →
+                        </button>
+                    </div>
+
+                    <!-- PESTAÑAS / ACORDEÓN PARA CLARIDAD -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-6">
+                        <div class="col-span-2">
+                            <div class="space-y-4" id="infoTabs">
+                                
+                                <!-- Acordeón: ¿Qué es? -->
+                                <details open class="bg-gray-50 p-4 rounded-lg border border-gray-200 cursor-pointer">
+                                    <summary class="font-bold text-lg text-gray-700">
+                                        1. ¿Qué es el Inicio de Actividades? (Lenguaje Ciudadano)
+                                    </summary>
+                                    <p class="mt-2 text-gray-600">Es el proceso legal para informar al SII que comenzarás a realizar cualquier tipo de trabajo o negocio que te genere ingresos (rentas) en el futuro. Es el primer paso para formalizar tu emprendimiento.</p>
+                                </details>
+
+                                <!-- Acordeón: Requisitos -->
+                                <details class_A="bg-gray-50 p-4 rounded-lg border border-gray-200 cursor-pointer">
+                                    <summary class="font-bold text-lg text-gray-700">
+                                        2. Requisitos Clave
+                                    </summary>
+                                    <ul class="list-disc list-inside mt-2 text-gray-600 space-y-1 ml-4">
+                                        <li>Cédula de Identidad Vigente.</li>
+                                        <li>Ser mayor de 18 años.</li>
+                                        <li>Tener Clave Única del Registro Civil o Clave Tributaria SII.</li>
+                                        <li>Definir la Actividad Económica (Giro) que realizarás.</li>
+                                    </ul>
+                                </details>
+
+                                <!-- Acordeón: Después, ¿Qué sigue? -->
+                                <details class="bg-gray-50 p-4 rounded-lg border border-gray-200 cursor-pointer">
+                                    <summary class="font-bold text-lg text-gray-700">
+                                        3. Próximos Pasos (Validación y Timbraje)
+                                    </summary>
+                                    <p class="mt-2 text-gray-600">Una vez que inicies actividades, deberás realizar la **Validación de Domicilio** y el **Timbraje de Documentos** (ej. facturas o boletas). El sistema te guiará automáticamente.</p>
+                                </details>
+
+                            </div>
+                        </div>
+
+                        <!-- Panel Lateral: Recursos y Guías -->
+                        <div class="md:col-span-1 space-y-4">
+                            <h3 class="text-xl font-bold text-gray-700 border-b pb-2">Recursos Rápidos</h3>
+                            <a href="#" class="block p-4 bg-yellow-50 rounded-lg shadow-sm hover:shadow-md transition duration-150 text-gray-700">
+                                <span class="font-semibold text-sm">Guía:</span> ¿Cuál es mi Actividad Económica (Giro)?
+                            </a>
+                            <a href="#" class="block p-4 bg-red-50 rounded-lg shadow-sm hover:shadow-md transition duration-150 text-gray-700">
+                                <span class="font-semibold text-sm">Video Tutorial:</span> Inicio de Actividades en 5 minutos.
+                            </a>
+                            <a href="#" onclick="alertUser('Simulación: Se abre la infografía en una nueva pestaña.')" class="block p-4 bg-blue-50 rounded-lg shadow-sm hover:shadow-md transition duration-150 text-gray-700 cursor-pointer">
+                                <span class="font-semibold text-sm">Documento:</span> Ver Infografía Resumen
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            `
+        };
+
+        // Función para cargar contenido en el área principal
+        function loadContent(contentId) {
+            const mainContent = document.getElementById('mainContent');
+            mainContent.innerHTML = siteContent[contentId];
+            window.scrollTo(0, 0); // Volver al inicio de la página al cargar nuevo contenido
+        }
+
+        // Función que maneja la lógica de la Búsqueda Inteligente
+        function handleSearchInput() {
+            const input = document.getElementById('smartSearch');
+            const resultsDiv = document.getElementById('searchResults');
+            const query = input.value.trim().toLowerCase();
+            
+            if (query.length < 3) {
+                resultsDiv.classList.add('hidden');
+                return;
+            }
+
+            let resultsHTML = '';
+            let hasResults = false;
+
+            // 1. Búsqueda por Sinónimos y Coincidencias de Trámites
+            const matchingTrademarks = Object.entries(searchSynonyms).filter(([synonym, trademark]) => 
+                synonym.includes(query) || trademark.toLowerCase().includes(query)
+            );
+
+            // Filtrar para mostrar un solo resultado por trámite
+            const uniqueTrademarks = {};
+            matchingTrademarks.forEach(([synonym, trademark]) => {
+                if (!uniqueTrademarks[trademark]) {
+                    uniqueTrademarks[trademark] = synonym;
+                }
+            });
+
+            if (Object.keys(uniqueTrademarks).length > 0) {
+                resultsHTML += '<div class="px-4 py-2 text-xs font-semibold uppercase text-siiBlue">Trámites Destacados</div>';
+                Object.entries(uniqueTrademarks).forEach(([trademark, synonym]) => {
+                    // Si el usuario escribe un sinónimo (ej: 'crear empresa'), el enlace lleva al trámite oficial.
+                    if (trademark === 'Inicio de Actividades') {
+                        resultsHTML += `<a href="#" onclick="event.preventDefault(); loadContent('inicioActividades'); document.getElementById('searchResults').classList.add('hidden');" 
+                            class="block px-4 py-2 hover:bg-gray-100 transition duration-150">
+                            <span class="font-semibold text-siiBlue">${trademark}</span> 
+                            <span class="text-xs text-gray-500 block">Sugerencia por: '${synonym}'</span>
+                        </a>`;
+                    } else {
+                        // Otros trámites de ejemplo
+                         resultsHTML += `<a href="#" onclick="event.preventDefault(); alertUser('Simulación de navegación al trámite: ${trademark}')" 
+                            class="block px-4 py-2 hover:bg-gray-100 transition duration-150">
+                            <span class="font-semibold text-gray-800">${trademark}</span> 
+                            <span class="text-xs text-gray-500 block">Sugerencia por: '${synonym}'</span>
+                        </a>`;
+                    }
+                });
+                hasResults = true;
+            }
+            
+            // 2. Resultados de Guías/Ayuda (Simulación)
+            if ('guia'.includes(query) || 'ayuda'.includes(query) || 'como hacer'.includes(query)) {
+                resultsHTML += '<div class="px-4 py-2 text-xs font-semibold uppercase text-gray-500 mt-2">Guías y Ayuda</div>';
+                resultsHTML += `<a href="#" onclick="event.preventDefault(); alertUser('Te dirigiré a la Guía Rápida para Emprendedores')" 
+                    class="block px-4 py-2 hover:bg-gray-100 transition duration-150 text-gray-700">
+                    Guía: Pasos para Empezar un Negocio
+                </a>`;
+                hasResults = true;
+            }
+
+            if (hasResults) {
+                resultsDiv.innerHTML = resultsHTML;
+                resultsDiv.classList.remove('hidden');
+            } else {
+                resultsDiv.innerHTML = `<div class="p-4 text-gray-500 text-sm">No encontramos resultados para "${query}".</div>`;
+                resultsDiv.classList.remove('hidden');
+            }
+        }
+        
+        // Función de alerta personalizada (para evitar el uso de alert())
+        function alertUser(message) {
+            document.getElementById('chatbotModal').classList.add('hidden'); // Cerrar modal si está abierto
+            const alertBox = document.getElementById('customAlert');
+            const alertMsg = document.getElementById('alertMessage');
+            
+            alertMsg.textContent = message;
+            alertBox.classList.remove('hidden', '-translate-y-full');
+            alertBox.classList.add('translate-y-0');
+
+            // Ocultar después de 3 segundos
+            setTimeout(() => {
+                alertBox.classList.remove('translate-y-0');
+                alertBox.classList.add('-translate-y-full');
+                setTimeout(() => alertBox.classList.add('hidden'), 300); // Ocultar después de la transición
+            }, 3000);
+
+             // Si el mensaje es de navegación a Inicio de Actividades, cargar la página
+             if (message.includes('Inicio de Actividades')) {
+                loadContent('inicioActividades');
+            }
+        }
+
+        // Cargar la vista inicial al cargar la página
+        window.onload = () => {
+            loadContent('home');
+        };
+
+    </script>
+</body>
+</html>
